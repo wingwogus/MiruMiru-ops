@@ -44,6 +44,9 @@ spec:
             - name: http
               containerPort: {{ .Values.containerPort }}
               protocol: TCP
+            - name: metrics
+              containerPort: {{ .Values.managementPort }}
+              protocol: TCP
           {{- if .Values.env }}
           env:
             {{- range $key := keys .Values.env | sortAlpha }}

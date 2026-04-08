@@ -51,7 +51,9 @@ service:
   type: ClusterIP
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
   port: 80
+  metricsPort: 9090
 containerPort: 8080
+managementPort: 9090
 env:
   SPRING_PROFILES_ACTIVE: prod
 envFrom:
@@ -147,6 +149,12 @@ startupProbe:
     port: http
   failureThreshold: 30
   periodSeconds: 5
+
+serviceMonitor:
+  enabled: true
+  interval: 30s
+  scrapeTimeout: 10s
+  path: /actuator/prometheus
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
   enabled: false
