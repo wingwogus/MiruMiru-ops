@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mirumiru
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/wingwogus/MiruMiru-ops.git
+    targetRevision: main
+    path: apps/mirumiru
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: mirumiru
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
